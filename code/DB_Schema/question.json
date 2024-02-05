@@ -1,0 +1,25 @@
+{
+    "QID": "c211573a-ef72-4266-84b9-c44edd7446e0",
+    "Body": "What is an interpreted language?",
+    "Options": [
+        [
+            "A language that is compiled before runtime",
+            false
+        ],
+        [
+            "A language that is not compiled before runtime",
+            true
+        ],
+        [
+            "A language that is compiled after runtime",
+            false
+        ],
+        [
+            "A language that is not compiled after runtime",
+            false
+        ]
+    ],
+    "Category": "Programming",
+    "Company": "NTT Data",
+    "InUse": true
+}
