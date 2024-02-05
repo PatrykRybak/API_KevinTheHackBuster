@@ -9,7 +9,7 @@
 **Table of contents:**
 
 1. [Introduction](#introduction)
-    
+   
     * [Basic info](#basic-info)
     * [API Levels](#api-levels)
     * [Errors](#errors)
@@ -513,9 +513,13 @@ https://kevin.com/api/company/questions/add
 
 **About question structure:**
 
-All fields 
+All fields are required.
 
+"inUse" field decides wether API will serve this question as part of quiz or not.
 
+Array options is built from small answer arrays. Those arrays must contain possible answer and boolean value that tells if answer is correct or not.
+
+**Info:** Keep your request structured exactly like an example!
 
 **Response:**
 
@@ -530,15 +534,79 @@ All fields
 
 ### <u>Editing question:</u>
 
+**Path:**
 
+```
+https://kevin.com/api/company/questions/edit
+```
 
+**Type:** POST
 
+**Request:** 
+
+```json
+{
+	"qid": "c9d14faa-6eb8-430d-8a05-d328010a7c85",
+	"body": "Question",
+	"options": [
+			[
+					"X",
+					false
+			],
+			[
+					"Y",
+					true
+			],
+			[
+					"Z",
+					false
+			]
+	],
+	"category": "Testing",
+	"inUse": false
+}
+
+```
+
+**Response:**
+
+```json
+{
+	"status": "200",
+	"message": "Question updated"
+}
+```
+
+**Info:** Editing question is basically adding with specified QID.
 
 
 
 ### <u>Deleting question:</u>
 
+**Path:**
 
+```
+https://kevin.com/api/company/questions/delete
+```
+
+**Type:** POST
+
+**Request:** 
+
+```json
+{
+	"qid": "b3633a8f-752c-4143-ac99-2f232fb6ad56"
+}
+```
+
+**Response:**
+
+```json
+{
+	"status": "200",
+	"message": "Question deleted"
+}
+```
 
 ***
 
