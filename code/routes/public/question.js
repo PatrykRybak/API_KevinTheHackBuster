@@ -1,8 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const {
-    getCompanyByName,
-    getQuestionsfromCompany,
+    getSpecificQuestionfromCompany
 } = require('../../custom_modules/dynamo');
 const activityModule = require('../../custom_modules/telemetry');
 
@@ -13,22 +12,12 @@ let api_conf = JSON.parse(fs.readFileSync(__dirname + '/../../api_configuration.
 router.post('/', async (req, res) => {
     if (req.body.publicKey == api_conf.publicKey) {
         let company = req.body.company;
-        if(company && typeof company === 'string' && company.trim() !== ''){
-            
+        let qid = req.body.qid;
+        if(company && typeof company === 'string' && company.trim() !== '' && qid && typeof qid === 'string' && qid.trim() !== ''){    
             try {
-                activityModule.recordActivity('checkingCompanyExistance');
-                user = await getCompanyByName("Companies", company);
-                if(Object.keys(user).length != 1){
-                    return res.status(400).json({"status": "400", "message": "Company does not exist"});
-                }
-            } catch (err) {
-                return res.status(500).json({"error": "500", "message": "Request cannot be completed"});
-            }
-
-            try {
-                activityModule.recordActivity('quiz');
-                const questions = await getQuestionsfromCompany(company);
-                return res.status(200).json({"status": "200", "questions": questions.Items});
+                activityModule.recordActivity('specificQuestion');
+                const questions = await getSpecificQuestionfromCompany(company, qid);
+                return res.status(403).json({"status": "200", "questions": questions.Items});
             } catch (err) {
                 return res.status(500).json({"error": "500", "message": "Request cannot be completed"});
             }

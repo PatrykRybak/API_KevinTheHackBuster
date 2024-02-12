@@ -77,6 +77,22 @@ const getQuestionsfromCompany = async (Company) => {
     return await dynamoClient.scan(params).promise();
 };
 
+const getSpecificQuestionfromCompany = async (Company, qid) => {
+    const params = {
+        TableName: "Questions",
+        FilterExpression : "#sk1 = :skv1 AND #sk2 = :skv2",
+        ExpressionAttributeNames:{
+            "#sk1": "Company",
+            "#sk2": "QID"
+        },
+        ExpressionAttributeValues: {
+            ":skv1": Company,
+            ":skv2": qid
+        }
+    };
+    return await dynamoClient.scan(params).promise();
+};
+
 const getAllQuestions = async (Company) => {
     const params = {
         TableName: "Questions",
@@ -106,6 +122,7 @@ module.exports = {
     del,
     getCompanyByName,
     getAllQuestions,
+    getSpecificQuestionfromCompany,
     getQuestionsfromCompany,
     deleteQuestionByQID,
     newTelemetryRecord,

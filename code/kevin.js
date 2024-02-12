@@ -19,20 +19,22 @@ const telemetry = require('./routes/company/telemetry');
 // PUBLIC
 const quiz = require('./routes/public/quiz');
 const answer = require('./routes/public/answer');
+const question = require('./routes/public/question');
 
 const app = express();
-const port = 3000;
+
+let api_conf = JSON.parse(fs.readFileSync(__dirname + '/api_configuration.json'));
 
 app.disable('x-powered-by');
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
     credentials: true,
-    origin: [`http://127.0.0.1:${port}/`]
+    origin: api_conf.cors
 }));
 
-app.listen(port, () => {
-    console.log(`Kevin The Hack Buster API v1.0 works @ http://localhost:${port}/api`);
+app.listen(api_conf.port, api_conf.ip, () => {
+    console.log(`Kevin The Hack Buster API v1.0 works @ http://${api_conf.ip}:${api_conf.port}/api`);
 });
 
 //Main API welcome page
@@ -59,6 +61,7 @@ app.use('/api/company/newPassword', newPassword);
 app.use('/api/company/telemetry', telemetry);
 app.use('/api/quiz', quiz);
 app.use('/api/answer', answer);
+app.use('/api/question', question);
 
 // 404 error page
 app.use((req, res) => {
